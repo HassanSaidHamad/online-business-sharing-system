@@ -1,0 +1,94 @@
+<div class="container-fluid mt-4">
+    <table class="table table-bordered table-hover bg-white text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Order Quantity</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders | paginate: {
+                itemsPerPage: tableSize,
+                currentPage: pageNumber,
+                totalItems: count}; let i = index;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ order?.customer?.firstName }}</td>
+                <td>{{ order?.product?.productName }}</td>
+                <td>{{ order?.orderQuantity }}</td>
+                <td>{{ order?.orderDate | date: 'fullDate' }}</td>
+                <td>
+                    <span *ngIf="order?.status == 'Confirmed'" class="badge rounded-pill bg-success">
+                        Confirmed
+                    </span>
+                    <span *ngIf="order?.status == 'Ordered'" class="badge rounded-pill bg-success">
+                        Ordered
+                    </span>
+                    <span *ngIf="order?.status == 'Processing'" class="badge rounded-pill bg-info">
+                        Processing
+                    </span>
+                    <span *ngIf="order?.status == 'Pending'" class="badge rounded-pill bg-danger">
+                        Pending
+                    </span>
+                </td>
+                <td>
+                    <button (click)="findOrder(order.orderId)" class="btn btn-primary btn-sm shadow-none me-2"
+                        data-bs-toggle="modal" data-bs-target="#orderModal">Edit</button>
+                    <button (click)="deleteOrder(order.orderId)"
+                        class="btn btn-danger btn-sm shadow-none">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" style="cursor: pointer;">
+        <ul class="pagination justify-content-end">
+            <li class="  bg-white">
+                <a class="">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        class="" style="cursor: pointer;">
+                    </pagination-controls>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+<!-- REPLY ORDER Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form #orderForm="ngForm" (ngSubmit)="replyOrder(orderForm.value)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reply Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="">Select Order Status</label>
+                            <select name="status" ngModel="Confirmed" [(ngModel)]="updatedOrder.status"
+                                class="form-select shadow-none" required>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Ordered">Ordered</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closeRepForm" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="orderForm.invalid" class="btn btn-primary">
+                        Save Order
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

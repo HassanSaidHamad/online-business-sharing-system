@@ -1,0 +1,47 @@
+<div class="container-fluid mt-4">
+    <table class="table table-bordered table-hover bg-white text-center">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <!-- <th scope="col">Actions</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let payment of payments | paginate: {
+                itemsPerPage: tableSize,
+                currentPage: pageNumber,
+                totalItems: count}; let i = index;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ payment?.order?.product?.productName }}</td>
+                <td>{{ payment?.paymentAmount | number }}</td>
+                <td>{{ payment?.paymentDate | date: 'fullDate' }}</td>
+                <td>
+                    <span class="badge rounded-pill bg-success">
+                        {{ payment?.status }}
+                    </span>
+                </td>
+                <!-- <td>
+                    <button (click)="findOrder(order.orderId)" class="btn btn-primary btn-sm shadow-none me-2"
+                        data-bs-toggle="modal" data-bs-target="#orderModal">Edit</button>
+                    <button (click)="deleteOrder(order.orderId)"
+                        class="btn btn-danger btn-sm shadow-none">Delete</button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation" style="cursor: pointer;">
+        <ul class="pagination justify-content-end">
+            <li class="  bg-white">
+                <a class="">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)"
+                        class="" style="cursor: pointer;">
+                    </pagination-controls>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

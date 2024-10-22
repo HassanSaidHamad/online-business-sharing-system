@@ -1,0 +1,25 @@
+<div class="container-fluid mt-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-4">
+                <span class="fw-bold me-4">Product Name: </span>
+                <span class="ms-4"> {{ product?.productName }} </span>
+            </div>
+            <div class="mb-4">
+                <span class="fw-bold me-3">Product Description: </span>
+                <span> {{ product?.productDescription }} </span>
+            </div>
+            <div class="mb-2">
+                <span class="fw-bold me-3">Product Price: </span>
+                <span> {{ product?.price | number }} </span>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button (click)="getProduct(product?.productId)" type="button"
+                class="btn btn-primary btn-primary col-md-2 shadow-none fw-bold">
+                Order Now
+                <i class="fas fa-arrow-right ms-3"></i>
+            </button>
+        </div>
+    </div>
+</div>

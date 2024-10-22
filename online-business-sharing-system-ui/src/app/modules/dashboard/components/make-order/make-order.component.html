@@ -1,0 +1,28 @@
+<div class="container-fluid mt-5">
+    <form #makeOrderForm="ngForm" (ngSubmit)="makeOrder(makeOrderForm.value)">
+        <div class="title text-uppercase text-center mb-4">
+            <h4 class="fw-bold">ordering form</h4>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <label for="">Product Name</label>
+                <input type="text" readonly [value]="product.productName" class="form-control shadow-none">
+            </div>
+            <div class="col-md-12 mb-4">
+                <label for="">Order Description</label>
+                <textarea type="text" name="description" ngModel class="form-control shadow-none" required></textarea>
+            </div>
+            <div class="col-md-12 mb-2">
+                <label for="">Order Quantity</label>
+                <input type="text" name="orderQuantity" ngModel class="form-control shadow-none" required>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <button [disabled]="makeOrderForm.invalid" type="submit"
+                        class="btn btn-primary btn-block col-md-12 fw-bold shadow-none">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
